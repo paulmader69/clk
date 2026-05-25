@@ -1,0 +1,2 @@
+source C:/esp/clk/build/bootloader/gdbinit/symbols
+source C:/esp/clk/build/bootloader/gdbinit/connect
