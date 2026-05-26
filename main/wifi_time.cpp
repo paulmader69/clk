@@ -140,10 +140,10 @@ bool WifiTime::isWPSActive(void) {
 }
 
 void WifiTime::initSNTP(void) {
-    sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, "pool.ntp.org");
+    esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
+    esp_sntp_setservername(0, "pool.ntp.org");
     sntp_set_sync_mode(SNTP_SYNC_MODE_SMOOTH);
-    sntp_init();
+    esp_sntp_init();
     // Timezone Berlin: https://github.com/nayarsystems/posix_tz_db/blob/master/zones.csv
     setenv("TZ", "CET-1CEST,M3.5.0,M10.5.0/3", 1);
     tzset();
@@ -151,7 +151,6 @@ void WifiTime::initSNTP(void) {
 
 void WifiTime::init(wifi_credentials_t *credentials) {
     wifi_credentials = credentials;
-    sntp_servermode_dhcp(0);
     initSTA();
     initSNTP();
 }
@@ -238,3 +237,4 @@ void WifiTime::sendMQTTAlarmStopped(void)
         ESP_LOGE(TAG, "Error sending MQTT message for alarm stopped");
 }
 #endif
+

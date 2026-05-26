@@ -18,13 +18,13 @@ public:
         {
             auto cfg = _bus_instance.config();
 
-            //cfg.spi_host = VSPI_HOST;             // Commented out because of ESP32C3
+                        cfg.spi_host = SPI2_HOST;
             cfg.spi_mode = 0;
             cfg.freq_write = 40000000;              // SPI clock on transmission (up to 80MHz, rounded to 80MHz divided by an integer)
             cfg.freq_read = 16000000;
             cfg.spi_3wire = false;
             cfg.use_lock = true;                    // Transaction lock
-            cfg.dma_channel = 0;                    // Set the DMA channel (1 or 2. 0=disable)
+            cfg.dma_channel = SPI_DMA_CH_AUTO;                    // Set the DMA channel (1 or 2. 0=disable)
             cfg.pin_sclk = DISPLAY_SCLK_GPIO;
             cfg.pin_mosi = DISPLAY_MOSI_GPIO;
             cfg.pin_miso = -1;                      // (-1 = disable)

@@ -24,7 +24,7 @@ void Display::init(void) {
     // ADC1 config for light sensor
     adc_oneshot_unit_init_cfg_t init_config1 = {
         .unit_id = ADC_UNIT_1,
-        .ulp_mode = ADC_ULP_MODE_DISABLE,
+        .clk_src = ADC_DIGI_CLK_SRC_DEFAULT,.ulp_mode = ADC_ULP_MODE_DISABLE,
     };
     ESP_ERROR_CHECK(adc_oneshot_new_unit(&init_config1, &adc1_handle));    
     adc_oneshot_chan_cfg_t config = {
@@ -33,8 +33,8 @@ void Display::init(void) {
     };
     ESP_ERROR_CHECK(adc_oneshot_config_channel(adc1_handle, LIGHT_ADC_CHANNEL, &config));
 
-    xTaskCreate(this->monitorBrightnessTask, "monitor_brightness_task", 2048, this, 1, NULL);
     queue = xQueueCreate(1, sizeof(bool));
+    xTaskCreate(this->monitorBrightnessTask, "monitor_brightness_task", 2048, this, 1, NULL);
 }
 
 void Display::updateContent(display_element_t element, void *value, display_action_t action) {
@@ -234,19 +234,6 @@ void Display::updateContent(display_element_t element, display_action_t action) 
             }
             break;
 
-        case D_E_AUDIO:
-            lcd.setTextDatum(middle_center);
-            lcd.setTextColor(TFT_RED, TFT_BLACK);
-            switch (action) {
-                case D_A_OFF:
-                    lcd.drawString(DISPLAY_SYMBOL_AUDIO_OFF, 35, 170, &Antonio_Regular26pt7b);
-                    break;
-                default:
-                    lcd.drawString("  ", 35, 170, &Antonio_Regular26pt7b);
-                    break;
-            }
-            break;
-
         default:
             break;
     }
@@ -312,3 +299,7 @@ void Display::setIncreasedBrightness(bool request_inc_brightness) {
 bool Display::isDisplayOn(void) {
     return (display_brightness_level > 0 || increased_brightness_requested);
 }
+
+
+
+

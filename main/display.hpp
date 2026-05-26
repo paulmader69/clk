@@ -31,7 +31,6 @@ typedef enum {
     D_E_WIFI_STATUS,
     D_E_MQTT_STATUS,
     D_E_WIFI_SETTING,
-    D_E_AUDIO,
 } display_element_t;
 
 typedef enum {

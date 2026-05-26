@@ -1,3 +1,7 @@
-.pio
-.vscode/*
-sdkconfig.esp32-c3-devkitm-1.old
+build/
+.pio/
+managed_components/
+sdkconfig.old
+*.pyc
+__pycache__/
+.vscode/
